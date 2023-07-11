@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  loadedPath = 'recipe';
   title = 'food-recipes-app';
+
+  onNavigate(path:string) {
+    this.loadedPath = path;
+  }
 }
