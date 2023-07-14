@@ -9,6 +9,7 @@ import { ShoppingListService } from './shopping-list.service';
 
 export class RecipesService {
   recipeSelected = new EventEmitter<Recipe>();
+
   private recipes: Recipe[] = [
     new Recipe('A Chicken Salad', 
     'A pretty salad with chicken for protein', 
@@ -28,6 +29,10 @@ export class RecipesService {
 
   getRecipes() {
     return this.recipes.slice();
+  }
+
+  getRecipe(id: number) {
+    return this.recipes[id];
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
