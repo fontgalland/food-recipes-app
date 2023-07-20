@@ -11,6 +11,7 @@ import { Subscription } from "rxjs";
 
 export class HeaderComponent implements OnInit, OnDestroy {
     isAuthenticated = false;
+    isLoading = false;
     private userSub: Subscription;
 
     constructor(private dataStorageService: DataStorageService, private authService: AuthService) {}
@@ -18,7 +19,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.userSub = this.authService.user.subscribe(user => {
             this.isAuthenticated = !!user;
-        })    
+        })
+        this.onFetchData();
+
     }
     ngOnDestroy(): void {
         this.userSub.unsubscribe();
@@ -29,9 +32,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     onFetchData() {
-        this.dataStorageService.fetchRecipes().subscribe(
-
-        );
+        this.isLoading = true;
+        this.dataStorageService.fetchRecipes().subscribe(resp => {
+            console.log(resp);
+            this.isLoading = false;
+        }, error => {
+            this.isLoading = false;
+            console.log(error);
+        });
     }
 
     onLogout() {
